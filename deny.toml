@@ -8,13 +8,17 @@ ignore = [
     "RUSTSEC-2025-0141", # bincode unmaintained
     "RUSTSEC-2024-0449", # unsafe-libyaml via SlateDB/figment; YAML-file config unused
 
-    # Temporary risk acceptance while rustls 0.23.46 completes the 7-day cooldown.
-    # TODO(2026-10-21): upgrade after 09:54:15 UTC and remove these four ignores.
+    # Transitive deps via keyring (Linux secret-service store in s2-cli) — no maintained alternative.
+    "RUSTSEC-2026-0370", # zvariant unmaintained
+    "RUSTSEC-2026-0371", # zbus_names unmaintained
+    "RUSTSEC-2026-0372", # zvariant_derive unmaintained
+
+    # Temporary risk acceptance while rustls-webpki 0.103.16 and webpki-root-certs 1.0.10
+    # complete the 7-day cooldown.
+    # TODO(2026-10-27): upgrade both and remove these two ignores.
     # This date is a manual deadline, not an automatically enforced expiry.
-    { id = "RUSTSEC-2026-0346", reason = "Until 2026-10-21: rustls 0.23.46 cooldown; no custom session-value Debug logging in this workspace." },
-    { id = "RUSTSEC-2026-0347", reason = "Until 2026-10-21: rustls 0.23.46 cooldown; ECH is not configured in this workspace." },
-    { id = "RUSTSEC-2026-0348", reason = "Until 2026-10-21: rustls 0.23.46 cooldown; the rustls brotli feature is disabled." },
-    { id = "RUSTSEC-2026-0349", reason = "Until 2026-10-21: accept post-quantum downgrade risk while rustls 0.23.46 completes its cooldown." },
+    { id = "RUSTSEC-2026-0382", reason = "Until 2026-10-27: rustls-webpki 0.103.16 cooldown." },
+    { id = "RUSTSEC-2026-0383", reason = "Until 2026-10-27: webpki-root-certs 1.0.10 cooldown." },
 ]
 
 [licenses]
