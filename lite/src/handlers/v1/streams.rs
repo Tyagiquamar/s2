@@ -106,7 +106,7 @@ pub struct CreateArgs {
     responses(
         (
             status = StatusCode::CREATED,
-            description = "Stream created; `s2-provision-result: created`.",
+            description = "Stream created (`s2-provision-result: created`), or an idempotent retry of the original create request (`s2-provision-result: noop`).",
             body = v1t::stream::StreamInfo,
         ),
         (

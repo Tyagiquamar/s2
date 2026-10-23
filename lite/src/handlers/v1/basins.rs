@@ -85,13 +85,8 @@ pub struct CreateArgs {
     request_body = v1t::basin::CreateBasinRequest,
     responses(
         (
-            status = StatusCode::OK,
-            description = "Basin already exists and this is an idempotent retry carrying the same `s2-request-token`; `s2-provision-result: noop`.",
-            body = v1t::basin::BasinInfo,
-        ),
-        (
             status = StatusCode::CREATED,
-            description = "Basin created; `s2-provision-result: created`.",
+            description = "Basin created (`s2-provision-result: created`), or an idempotent retry of the original create request (`s2-provision-result: noop`).",
             body = v1t::basin::BasinInfo,
         ),
         (

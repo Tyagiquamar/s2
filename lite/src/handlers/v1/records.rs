@@ -116,7 +116,7 @@ pub struct CheckTailArgs {
         ),
         (
             status = StatusCode::CONFLICT,
-            description = "`stream_deletion_pending` / `basin_deletion_pending`: the stream or basin is being deleted.",
+            description = "`stream_deletion_pending` / `basin_deletion_pending`: the stream or basin is being deleted; `transaction_conflict`: retryable.",
             body = v1t::error::ErrorInfo,
         ),
         (
@@ -192,7 +192,7 @@ pub struct ReadArgs {
         ),
         (
             status = StatusCode::CONFLICT,
-            description = "`stream_deletion_pending` / `basin_deletion_pending`: the stream or basin is being deleted.",
+            description = "`stream_deletion_pending` / `basin_deletion_pending`: the stream or basin is being deleted; `transaction_conflict`: retryable.",
             body = v1t::error::ErrorInfo,
         ),
         (
@@ -437,7 +437,7 @@ pub struct AppendArgs {
         ),
         (
             status = StatusCode::REQUEST_TIMEOUT,
-            description = "`request_timeout`: the batch may or may not have been appended; use `match_seq_num` or a `fencing_token` to make retries safe.",
+            description = "`request_timeout`: the batch may or may not have been appended. If the original request included `match_seq_num`, retry with the same value to prevent duplicates. A `fencing_token` alone does not prevent duplicates.",
             body = v1t::error::ErrorInfo,
         ),
     ),
