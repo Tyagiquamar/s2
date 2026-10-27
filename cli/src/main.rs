@@ -568,6 +568,12 @@ async fn run(cli: Cli) -> Result<ExitCode, CliError> {
         }
 
         Command::ListStreams(args) => {
+            if args.uri.stream.is_some() && args.prefix.is_some() {
+                return Err(CliError::InvalidArgs(miette::miette!(
+                    help = "Make sure to provide the prefix once either using '--prefix' opt or in URI like 's2://basin-name/prefix'",
+                    "Multiple prefixes provided"
+                )));
+            }
             let basin_name = args.uri.basin.clone();
             let (streams, _) = ops::list_streams(&s2, args).await?;
             for stream_info in streams {

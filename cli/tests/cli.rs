@@ -614,3 +614,32 @@ fn only_account_endpoint_set_warns_and_uses_defaults() {
         "stderr should not report an endpoint parse error, got: {stderr}"
     );
 }
+
+/// Providing both a prefix in the URI and an explicit `--prefix` flag should be
+/// rejected with an invalid arguments error.
+#[test]
+fn list_streams_rejects_conflicting_prefixes() {
+    let env = TestEnv::new();
+    env.remember_access_token("test-token");
+    let assert = env
+        .s2()
+        .args([
+            "list-streams",
+            "s2://my-basin/prefix-in-uri",
+            "--prefix",
+            "prefix-in-flag",
+        ])
+        .assert()
+        .failure();
+
+    let stderr = String::from_utf8_lossy(&assert.get_output().stderr);
+    assert!(
+        stderr.contains("Multiple prefixes provided"),
+        "stderr should mention 'Multiple prefixes provided', got: {stderr}"
+    );
+    assert!(
+        stderr.contains("Make sure to provide the prefix once"),
+        "stderr should include the help text, got: {stderr}"
+    );
+}
+
